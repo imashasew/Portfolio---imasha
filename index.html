@@ -27,6 +27,8 @@
 	#colorlib-main-menu {
     background-color: #1B1B1B; /* Set background color for the navbar */
     padding: 10px 0;
+	
+	justify-content: center;
 }
 
 #colorlib-main-menu ul {
@@ -153,21 +155,188 @@
         justify-content: center;
         align-items: center;
       }
+	  #navbar {
+    z-index: 1000;
+    position: fixed;
+    background-color: black;
+    height: 35px;
+    width: 100%;
+}
+
+#colorlib-main-menu ul {
+    list-style: none;
+    display: flex;
+    justify-content:center;
+    padding-left: 20px;
+}
+
+#colorlib-main-menu li {
+    margin-right: 20px;
+}
+
+#colorlib-main-menu a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Sidebar styles */
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: black;
+    overflow-x: hidden;
+    transition: 0.5s; /* Slide effect */
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+}
+
+.sidebar ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* Align the items vertically */
+}
+
+.sidebar li {
+    padding: 15px 0; /* Add space between each link */
+    text-align: center; /* Center the text horizontally */
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+/* Mobile view */
+@media screen and (max-width: 425px) {
+    /* Hide the main nav list */
+    #nav-list {
+        display: none !important;
+    }
+
+    /* Show the hamburger menu */
+    .menu-toggle {
+        display: block;
+        cursor: pointer;
+        padding: 0px;
+		
+		position: fixed;
+   
+    right: 50px; /* Place the toggle button on the top right */
+    z-index: 1001;
+
+	
+    }
+
+    .menu-toggle .bar {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: white;
+        margin: 5px auto;
+		justify-content: right;
+    }
+
+    /* Sidebar should initially be hidden */
+    #sidebar {
+        width: 0;
+    }
+
+    /* When active, the sidebar should slide in */
+    #sidebar.active {
+        width: 250px;
+    }
+}
+
+/* Between 768px and 1044px (tablet to small desktop sizes) */
+@media screen and (min-width: 768px) and (max-width: 1044px) {
+    /* Nav list in horizontal layout */
+    #nav-list {
+        display: flex;
+        justify-content: space-around;
+        padding: 0;
+    }
+
+    #colorlib-main-menu ul {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    #colorlib-main-menu li {
+        margin-right: 20px;
+    }
+
+    .menu-toggle {
+        display: none; /* Hide hamburger icon */
+    }
+}
+
+/* Larger screens (1044px and above) */
+@media screen and (min-width: 1044px) {
+    /* Nav list in horizontal layout */
+    #nav-list {
+        display: flex;
+        justify-content: space-around;
+        padding: 0;
+    }
+
+    #colorlib-main-menu ul {
+        display: flex;
+        justify-content: center;
+    }
+
+    #colorlib-main-menu li {
+        margin-right: 20px;
+    }
+
+    .menu-toggle {
+        display: none; /* Hide hamburger icon */
+    }
+}
+
+	  
 </style>
+
 
 	</head>
 	<body style="background-color: #2B0B3A;">
 		<div >
 			<!-- Horizontal Navbar -->
-			<div id="navbar"  style=" z-index: 1000;position:fixed;background-color:black;height:35px;width:100%;">
-					
-			<nav id="colorlib-main-menu" role="navigation" style=" background-color:black" >
-				<ul>
+			<div id="navbar" style="z-index: 1000; position: fixed; background-color: black; height: 35px; width: 100%;">
+				<nav id="colorlib-main-menu" role="navigation" style="background-color: black;">
+					<!-- Hamburger Icon -->
+					<div class="menu-toggle" id="menu-toggle">
+						<span class="bar"></span>
+						<span class="bar"></span>
+						<span class="bar"></span>
+					</div>
+			
+					<!-- Sidebar -->
+					<div id="sidebar" class="sidebar">
+						<ul>
+							<li class="active"><a href="#" data-nav-section="home">Home</a></li>
+							<li><a href="#" data-nav-section="about">About</a></li>
+							<li><a href="#" data-nav-section="skills">Skills</a></li>
+							<li><a href="#" data-nav-section="experience">Experience</a></li>
+							<li><a href="#" data-nav-section="education">Education</a></li>
+							<li><a href="#" data-nav-section="work">Projects</a></li>
+							<li><a href="#" data-nav-section="work2">Recent work</a></li>
+							<li><a href="#" data-nav-section="Achievements">Achievements</a></li>
+							<li><a href="#" data-nav-section="contact">Contact</a></li>
+						</ul>
+					</div>
+			
+					<!-- Desktop Nav List (Visible on larger screens) -->
+					<ul id="nav-list">
 						<li class="active"><a href="#" data-nav-section="home">Home</a></li>
 						<li><a href="#" data-nav-section="about">About</a></li>
-						
 						<li><a href="#" data-nav-section="skills">Skills</a></li>
-
 						<li><a href="#" data-nav-section="experience">Experience</a></li>
 						<li><a href="#" data-nav-section="education">Education</a></li>
 						<li><a href="#" data-nav-section="work">Projects</a></li>
@@ -175,11 +344,26 @@
 						<li><a href="#" data-nav-section="Achievements">Achievements</a></li>
 						<li><a href="#" data-nav-section="contact">Contact</a></li>
 					</ul>
-				</div>
-			</nav>
-		
-	
-		
+				</nav>
+			</div>
+			
+			<script>
+				document.getElementById('menu-toggle').addEventListener('click', function() {
+    const sidebar = document.getElementById('sidebar');
+    const navList = document.getElementById('nav-list');
+    
+    sidebar.classList.toggle('active'); // Toggle the sidebar visibility
+    
+    // If the sidebar is open, hide the nav list
+    if (sidebar.classList.contains('active')) {
+        navList.style.display = 'none';  // Hide the nav list when sidebar is open
+    } else {
+        navList.style.display = 'flex';  // Show the nav list when sidebar is closed
+    }
+});
+
+			</script>
+			
 			<!-- Author Info (Optional) -->
 			
 		
@@ -188,64 +372,89 @@
 		
 
 		
-			<section id="colorlib-hero" class="js-fullheight" data-section="home" >
+			<section id="colorlib-hero" class="js-fullheight" data-section="home">
 				<div class="flexslider js-fullheight">
 					<ul class="slides">
-				   	<li style="background-image: url(images/Picture4.jpg);">
-				   		<div class="overlay"></div>
-				   		
-				   		
-					   			<div class="col-md-6 col-md-offset-3 col-md-pull-3 col-sm-12 col-xs-12 js-fullheight slider-text">
-					   				<div class="slider-text-inner js-fullheight">
-					   					<div class="desc">
-											<div class="text-center" style="margin-left:250px;">
-												
-												<h1 id="colorlib-logo" style="color:white;"><a href="index.html">A.V.Imasha Ariyasingha</a></h1>
-												<span class="position" style="color:white"><a href="#" style="color:#fff">Undergraduate of Software Engineering</a> at CINEC campus</span>
-												<h1 style="color:white">I am <br>a Designer</h1>
-												<p><a class="btn btn-primary btn-learn" style="color:white" href="./images/imasha_cv.pdf">Download CV <i class="icon-download4"></i></p></a>
-												<a href="https://github.com/imashasew" class="icon-github"></a>
-												<a href="https://www.linkedin.com/in/imasha-sewwandi-ba08881a6" class="bi bi-linkedin"></a>
+						<li style="background-image: url(images/Picture4.jpg);">
+							<div class="overlay"></div>
+			
+							<!-- Centered Content -->
+							<div class="col-md-6 col-md-offset-3 col-md-pull-3 col-sm-12 col-xs-12 js-fullheight slider-text">
+								<div class="slider-text-inner js-fullheight">
+									<div class="desc text-center" style="margin-top: 80px">
+										<h1 id="colorlib-logo" style="color:white;">
+											<a href="index.html">A.V.Imasha Ariyasingha</a>
+										</h1>
+										<span class="position" style="color:white">
+											<a href="#" style="color:#fff">Undergraduate of Software Engineering</a> at CINEC campus
+										</span>
+										<h1 style="color:white">I am <br>a Designer</h1>
+										<p>
+											<a class="btn btn-primary btn-learn" style="color:white" href="./images/imasha_cv.pdf">
+												Download CV <i class="icon-download4"></i>
+											</a>
+										</p>
+										<a href="https://github.com/imashasew" class="icon-github"></a>
+										<a href="https://www.linkedin.com/in/imasha-sewwandi-ba08881a6" class="bi bi-linkedin"></a>
+									</div>
+								</div></div>
+							<!-- Profile Image Section -->
+<div class="name-container">
+    <img class="right-image" src="images/Picture3.png" alt="Profile Image">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</section>
 
-											</div>
-											
-										</div>
-						   				
-											  </div>
-										<!-- Right Side: Profile Image -->
-										<div class="name-container ">
-											<img  class="right-image "src="images/Picture3.png" alt="Profile Image">
-										</div>
-									
+<style>
+/* Default Desktop Styles */
+.name-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-					   				</div>
-									
-					   			</div>
-								
-					   		</div>
-				   		</div>
-				   	</li>
-					   
-				  	</ul>
-				</div>
-				</section>
-				<style>
-					.name-container {
-						display: flex;
-						
-						 /* Space between name and image */
-					}
-				
-					.right-image {
-						width: 100%; /* Adjust size as needed */
-						height: 150%;
-						border-radius: 100%; 
-						margin-top:150px;
-						margin-left:100px;
-						margin-right:200px;
-						
-					}
-				</style>
+.right-image {
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+    border-radius: 100%;
+    margin-top: 150px;
+    margin-right: 700px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+    .name-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .right-image {
+        max-width: 200px; /* Adjust size for mobile */
+        margin-top: 20px; /* Reduce top margin for mobile view */
+        margin-right: 0; /* Remove right margin on mobile */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .right-image {
+        max-width: 150px; /* Further reduce image size for very small screens */
+    }
+}
+</style>
+
+
+
+</style>
 		
 			<div id="colorlib-counter" class="colorlib-counters" style="background-image: url(images/Picture.jpg);" data-stellar-background-ratio="0.5">
 				
@@ -713,7 +922,55 @@
 										</p></div></div>
 					
 				</div>
+				<style>
+/* Hide the video by default */
+.project .desc video {
+    display: none; /* Hide video */
+}
+
+/* Show the video when the container is hovered */
+.project .desc:hover video {
+    display: block; /* Show the video */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Container for the video to ensure aspect ratio is maintained */
+.project .desc .con {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio (height / width = 9 / 16 = 0.5625) */
+    overflow: hidden;
+}
+
+/* Ensure the video fits the container and maintain the aspect ratio */
+.project .desc video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the video covers the container while maintaining the aspect ratio */
+}
+
+/* Responsive styling for mobile */
+@media (max-width: 768px) {
+    .project .desc .con {
+        padding-bottom: 56.25%; /* Keep the same aspect ratio for mobile */
+    }
+
+    .project .desc video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+				</style>
 			</section>
+
 
 			<section class="experience-section" >
 				<div class="colorlib-narrow-content" data-animate-effect="fadeInLeft">
@@ -851,7 +1108,7 @@
 									<div class="panel panel-default">
 									    <div class="panel-heading" role="tab" id="headingTwo">
 									        <h4 class="panel-title">
-									            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color:white; background-color:#2B0B3A">Bachelor of Science Degree of Software Engineer
+									            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color:white; background-color:#2B0B3A">Bachelor of Science Degree of Software Engineering
 									            </a>
 									        </h4>
 									    </div>
@@ -863,29 +1120,18 @@
 									        </div>
 									    </div>
 									</div>
-									<div class="panel panel-default">
-									    <div class="panel-heading" role="tab" id="headingThree">
-									        <h4 class="panel-title">
-									            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"style="color:white; background-color:#2B0B3A">Diploma in Human Resource Management
-									            </a>
-									        </h4>
-									    </div>
-									    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-									        <div class="panel-body">
-									            <p>SITC Campus(2024-Present)-Following Diploma in Human Resource Management and Completed .</p> </div>
-									    </div>
-									</div>
+									
 
 									<div class="panel panel-default">
 									    <div class="panel-heading" role="tab" id="headingFour">
 									        <h4 class="panel-title">
-									            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour" style="color:white; background-color:#2B0B3A">Diploma in English
+									            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour" style="color:white; background-color:#2B0B3A">Diploma Level
 									            </a>
 									        </h4>
 									    </div>
 									    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 									        <div class="panel-body">
-									            <p>SITC Campus (2023 Feb-2024 May)-Successfully completed Diploma in English.</p></div>
+									            <p>SITC Campus (2023 Feb-2024 May)-Successfully completed Diploma in English.<br>SITC Campus(2024-Present)-Following Diploma in Human Resource Management and Completed .</p></div>
 									    </div>
 									</div>
 									<div class="panel panel-default">
@@ -984,7 +1230,13 @@
 									<i class="icon-globe-outline"></i>
 								</div>
 								<div class="colorlib-text">
-									<p><a href="email://">imashasewwandi9355@gmail.com</a></p>
+									
+									<p><a href="https://mail.google.com/mail/?view=cm&fs=1&to=imashasewwandi9355@gmail.com" target="_blank">
+										imashasewwandi9355@gmail.com  
+									</a>
+									
+									</p>
+									
 								</div>
 							</div>
 
@@ -1004,24 +1256,7 @@
 						<div class="col-md-7 col-md-push-1">
 							<div class="row">
 								<div class="col-md-10 col-md-offset-1 col-md-pull-1 animate-box" data-animate-effect="fadeInRight">
-									<form action="">
-										<div class="form-group">
-											<input type="text" class="form-control" placeholder="Name">
-										</div>
-										<div class="form-group">
-											<input type="text" class="form-control" placeholder="Email">
-										</div>
-										<div class="form-group">
-											<input type="text" class="form-control" placeholder="Subject">
-										</div>
-										<div class="form-group">
-											<textarea name="" id="message" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
-										</div>
-										<div class="form-group">
-											<input type="submit" class="btn btn-primary btn-send-message" value="Send Message">
-										</div>
-									</form>
-								</div>
+									
 								
 							</div>
 						</div>
